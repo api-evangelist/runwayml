@@ -1,0 +1,65 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Runway
+providerId: runwayml
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Rate Limiting
+- Quotas
+description: >-
+  Runway governs the developer API through per-organization usage tiers rather
+  than a single published global rate limit. Tiers set how many generation tasks
+  you can have running concurrently (per model) and your request throughput;
+  organizations move up tiers with spend / usage history, and higher limits are
+  available by exception for enterprise customers. Because generation is
+  asynchronous, the practical constraint is task concurrency and your credit
+  balance, not a per-minute request cap. Clients polling GET /tasks/{id} should
+  not poll more than once every five seconds per task.
+notes: >-
+  Exact per-tier concurrency and request numbers are defined in Runway's usage
+  tiers documentation and can change - verify at docs.dev.runwayml.com/usage/tiers
+  during reconciliation. Submitting tasks with insufficient credits or above your
+  tier's concurrency will be rejected rather than queued indefinitely.
+sources:
+- https://docs.dev.runwayml.com/usage/tiers/
+- https://docs.dev.runwayml.com/guides/using-the-api/
+- https://help.runwayml.com/hc/en-us/articles/21668552945171-Runway-API-FAQs
+responseCodes:
+  throttled: 429
+limits:
+- name: Task Concurrency
+  scope: organization
+  metric: concurrent_tasks
+  limit: per usage tier (per model)
+  notes: The main constraint - how many generation tasks can run at once, set by your org's usage tier and model.
+- name: Request Rate
+  scope: organization
+  metric: requests
+  limit: per usage tier
+  notes: Request throughput is governed by tier; no single fixed global per-minute number is published.
+- name: Task Polling
+  scope: task
+  metric: requests
+  limit: <= 1 poll / 5 seconds per task
+  notes: Runway advises not expecting task updates more often than once every five seconds for a given task.
+- name: Credit Balance
+  scope: organization
+  metric: credits
+  limit: prepaid balance
+  notes: Tasks are billed in credits; an empty balance blocks new billable generation tasks.
+policies:
+- name: Usage Tiers
+  description: Concurrency and rate limits scale by organization usage tier; higher limits available by exception for enterprise.
+- name: Backoff Strategy
+  description: On 429, back off with exponential delay and jitter and honor any Retry-After header before retrying.
+- name: Asynchronous Draining
+  description: Prefer increasing task concurrency headroom over aggressive polling; poll each task no more than once every five seconds.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

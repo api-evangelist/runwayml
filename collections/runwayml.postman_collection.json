@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "Runway API",
+    "description": "Runway (RunwayML) generative AI media API. Base URL: https://api.dev.runwayml.com/v1. All requests use Authorization: Bearer <API secret> and a dated X-Runway-Version header. Generation is asynchronous - POST a generation endpoint, then poll GET /tasks/{id} until SUCCEEDED. Authored by API Evangelist from public docs; verify against docs.dev.runwayml.com.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{apiSecret}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.dev.runwayml.com/v1", "type": "string" },
+    { "key": "apiSecret", "value": "", "type": "string" },
+    { "key": "runwayVersion", "value": "2024-11-06", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Start Generating",
+      "item": [
+        {
+          "name": "Create an image-to-video task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"gen4_turbo\",\n  \"promptImage\": \"https://example.com/start.jpg\",\n  \"promptText\": \"slow cinematic push in\",\n  \"ratio\": \"1280:768\",\n  \"duration\": 5\n}" },
+            "url": { "raw": "{{baseUrl}}/image_to_video", "host": ["{{baseUrl}}"], "path": ["image_to_video"] },
+            "description": "Generate video from a starting image and text prompt using Gen-4 Turbo or Gen-4.5. Returns a task id to poll."
+          }
+        },
+        {
+          "name": "Create a text-to-image task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"gen4_image\",\n  \"promptText\": \"a neon-lit street at night\",\n  \"ratio\": \"1920:1080\"\n}" },
+            "url": { "raw": "{{baseUrl}}/text_to_image", "host": ["{{baseUrl}}"], "path": ["text_to_image"] },
+            "description": "Generate images from a text prompt using Gen-4 Image or Gen-4 Image Turbo. Returns a task id to poll."
+          }
+        },
+        {
+          "name": "Create a video-to-video task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"gen4_aleph\",\n  \"videoUri\": \"https://example.com/source.mp4\",\n  \"promptText\": \"restyle as watercolor animation\"\n}" },
+            "url": { "raw": "{{baseUrl}}/video_to_video", "host": ["{{baseUrl}}"], "path": ["video_to_video"] },
+            "description": "Transform an existing video with the Aleph model. Returns a task id to poll."
+          }
+        },
+        {
+          "name": "Create a character-performance task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"act_two\",\n  \"character\": { \"type\": \"image\", \"uri\": \"https://example.com/char.png\" },\n  \"reference\": { \"type\": \"video\", \"uri\": \"https://example.com/perf.mp4\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/character_performance", "host": ["{{baseUrl}}"], "path": ["character_performance"] },
+            "description": "Drive a character with a reference performance video using Act-Two. Returns a task id to poll."
+          }
+        },
+        {
+          "name": "Create a text-to-speech task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"eleven_multilingual_v2\",\n  \"text\": \"Welcome to the show.\"\n}" },
+            "url": { "raw": "{{baseUrl}}/text_to_speech", "host": ["{{baseUrl}}"], "path": ["text_to_speech"] },
+            "description": "Synthesize speech audio from text. Returns a task id to poll."
+          }
+        },
+        {
+          "name": "Create a video-upscale task",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"upscale_v1\",\n  \"videoUri\": \"https://example.com/clip.mp4\"\n}" },
+            "url": { "raw": "{{baseUrl}}/video_upscale", "host": ["{{baseUrl}}"], "path": ["video_upscale"] },
+            "description": "Upscale a video to a higher resolution. Returns a task id to poll."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Task Management",
+      "item": [
+        {
+          "name": "Get task detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/:id", "host": ["{{baseUrl}}"], "path": ["tasks", ":id"], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Retrieve status (PENDING, RUNNING, SUCCEEDED, FAILED) and output for a task. Poll no more than once every five seconds."
+          }
+        },
+        {
+          "name": "Cancel or delete a task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/tasks/:id", "host": ["{{baseUrl}}"], "path": ["tasks", ":id"], "variable": [{ "key": "id", "value": "" }] },
+            "description": "Cancel a running task or delete a completed task record."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Organization",
+      "item": [
+        {
+          "name": "Get organization usage and credits",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "X-Runway-Version", "value": "{{runwayVersion}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/organization", "host": ["{{baseUrl}}"], "path": ["organization"] },
+            "description": "Return the usage tier and remaining credit balance for the organization tied to the API key."
+          }
+        }
+      ]
+    }
+  ]
+}

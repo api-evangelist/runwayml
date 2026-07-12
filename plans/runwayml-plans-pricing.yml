@@ -1,0 +1,158 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Runway
+providerId: runwayml
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Credits
+- Plans
+description: >-
+  The Runway developer API is billed on a prepaid credit model, separate from
+  the Runway web-app consumer subscriptions. You create a developer organization
+  in the dev portal, purchase credits at roughly $0.01 per credit, and each
+  generation task consumes credits according to model and output length. There is
+  no free/anonymous API tier - the free credits Runway grants are tied to the
+  consumer app, not guaranteed for API use. Per-model credit costs below are from
+  Runway's public pricing guide as of the review date and should be re-verified.
+notes: >-
+  Credit costs and the sunset of Gen-3 Alpha Turbo (scheduled July 30, 2026)
+  change over time - verify current per-model credit rates and any promotional
+  free credits on Runway's pricing and API pricing pages during reconciliation.
+sources:
+- https://docs.dev.runwayml.com/guides/pricing/
+- https://runwayml.com/pricing
+- https://help.runwayml.com/hc/en-us/articles/15124877443219-How-do-credits-work
+- https://docs.dev.runwayml.com/usage/tiers/
+plans:
+- id: runway-api-credits
+  name: API Credits (Pay-as-you-go)
+  type: usage
+  description: >-
+    Prepaid credits purchased against a developer organization and consumed per
+    generation task. Roughly $0.01 per credit.
+  entries:
+  - label: Credit Unit Price
+    name: credit_unit_price
+    type: usage
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '~$0.01 per credit'
+    userMultiplied: false
+  - label: Gen-4 Turbo Video
+    name: gen4_turbo_video
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5 credits per second (~$0.05/sec)
+    userMultiplied: false
+  - label: Gen-3 Alpha Turbo Video (deprecated, sunset 2026-07-30)
+    name: gen3a_turbo_video
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5 credits per second (~$0.05/sec)
+    userMultiplied: false
+  - label: Aleph Video-to-Video
+    name: aleph_video_to_video
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 28 credits per second (~$0.28/sec)
+    userMultiplied: false
+  - label: Act-Two Character Performance
+    name: act_two_performance
+    type: usage
+    metric: seconds
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5 credits per second (~$0.05/sec)
+    userMultiplied: false
+  - label: Gen-4 Image (720p)
+    name: gen4_image_720p
+    type: usage
+    metric: images
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 5 credits per 720p image (8 credits at 1080p)
+    userMultiplied: false
+  - label: Gen-4 Image Turbo
+    name: gen4_image_turbo
+    type: usage
+    metric: images
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2 credits per image, any resolution
+    userMultiplied: false
+  - label: Text-to-Speech
+    name: text_to_speech
+    type: usage
+    metric: characters
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 50
+    price: 1 credit per 50 characters
+    userMultiplied: false
+  - label: Video Upscale
+    name: video_upscale
+    type: usage
+    metric: frames
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: billed per output frame (~$0.007 to $0.012 per frame)
+    userMultiplied: false
+  elements:
+  - name: All Generation Endpoints
+  - name: Tasks API
+  - name: Organization API
+  - name: Self-Serve Usage Tiers
+- id: runway-api-enterprise
+  name: Enterprise / Custom
+  type: enterprise
+  description: >-
+    Higher concurrency and rate limits, volume credit pricing, and negotiated
+    terms available through Runway by exception / enterprise agreement.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Higher Concurrency and Rate Limits
+  - name: Volume Credit Pricing
+  - name: Priority Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

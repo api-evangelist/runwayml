@@ -1,0 +1,238 @@
+aid: runwayml
+url: https://raw.githubusercontent.com/api-evangelist/runwayml/refs/heads/main/apis.yml
+name: Runway
+kind: company
+description: Runway (RunwayML) is a generative AI media platform whose developer API
+  turns text, images, and video into new video, images, speech, and character
+  performances. The REST API at https://api.dev.runwayml.com/v1 exposes Runway's
+  Gen-4 and Gen-4 Turbo video models, Gen-4 Image text-to-image, the Aleph
+  video-to-video editing model, and Act character performance, all through an
+  asynchronous create-task-then-poll pattern authenticated with a Bearer API
+  secret and a dated X-Runway-Version header. Access is API-key based via a
+  developer organization; usage is billed in credits at roughly $0.01 per credit.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Text-to-Video
+- Image-to-Video
+- Text-to-Image
+- Video-to-Video
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: runwayml:runwayml-image-to-video-api
+  name: Runway Image-to-Video API
+  tags:
+  - Image-to-Video
+  - Video Generation
+  - AI Video
+  - Gen-4
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/api-details/sdks/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Generate video from a starting (and optional ending) image and a text
+    prompt using Runway's Gen-4 Turbo and Gen-4.5 models (and the deprecated Gen-3
+    Alpha Turbo). Submitting a POST creates an asynchronous task; the returned task
+    id is polled on the Tasks API until the rendered video URL is ready.
+- aid: runwayml:runwayml-text-to-image-api
+  name: Runway Text-to-Image API
+  tags:
+  - Text-to-Image
+  - Image Generation
+  - Generative AI
+  - Gen-4 Image
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/guides/using-the-api/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Generate still images from a text prompt (and optional reference
+    images) using the Gen-4 Image and Gen-4 Image Turbo models. Runs as an
+    asynchronous task, and the resulting images are commonly used as the seed frames
+    for image-to-video generation.
+- aid: runwayml:runwayml-video-to-video-api
+  name: Runway Video-to-Video API
+  tags:
+  - Video-to-Video
+  - Video Editing
+  - AI Video
+  - Aleph
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/guides/using-the-api/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Transform an existing video with a text prompt and optional reference
+    keyframes using Runway's Aleph video-to-video editing model - restyle, alter, or
+    re-render footage. Submitted as an asynchronous task and polled on the Tasks API.
+- aid: runwayml:runwayml-character-performance-api
+  name: Runway Character Performance API
+  tags:
+  - Character Performance
+  - Act
+  - Animation
+  - AI Video
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/characters/integration/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/characters/integration/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Drive a character (image or video) with a reference performance video
+    using the Act-Two model, transferring facial expression and body motion onto the
+    target character. Runs as an asynchronous task.
+- aid: runwayml:runwayml-text-to-speech-api
+  name: Runway Text-to-Speech API
+  tags:
+  - Text to Speech
+  - Audio
+  - Voice
+  - Generative AI
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/guides/using-the-api/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Synthesize speech audio from text, used to add voice-over to generated
+    video. Billed per character. Runs as an asynchronous task and polled on the Tasks
+    API for the resulting audio URL.
+- aid: runwayml:runwayml-video-upscale-api
+  name: Runway Video Upscale API
+  tags:
+  - Upscale
+  - Video Enhancement
+  - AI Video
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/guides/using-the-api/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Upscale a generated or uploaded video to a higher resolution. Runs as
+    an asynchronous task, billed per output frame, and polled on the Tasks API.
+- aid: runwayml:runwayml-tasks-api
+  name: Runway Tasks API
+  tags:
+  - Tasks
+  - Polling
+  - Async
+  - Jobs
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/guides/using-the-api/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Retrieve the status and output of a generation task (PENDING, RUNNING,
+    SUCCEEDED, FAILED) by id, or cancel/delete a running task. Every generation
+    endpoint returns a task id that is polled here - clients should not poll more
+    than once every five seconds per task.
+- aid: runwayml:runwayml-organization-api
+  name: Runway Organization API
+  tags:
+  - Organization
+  - Usage
+  - Credits
+  - Billing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.dev.runwayml.com/usage/tiers/
+  baseURL: https://api.dev.runwayml.com/v1
+  properties:
+  - url: https://docs.dev.runwayml.com/usage/tiers/
+    type: Documentation
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+  - url: openapi/runwayml-openapi.yml
+    type: OpenAPI
+  - url: collections/runwayml.postman_collection.json
+    type: PostmanCollection
+  - url: collections/runwayml.opencollection.json
+    type: OpenCollection
+  description: Return the usage tier and remaining credit balance for the developer
+    organization tied to your API key, so integrations can check credits before
+    submitting billable generation tasks.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/runwayml
+- type: Website
+  url: https://runwayml.com/
+- type: Documentation
+  url: https://docs.dev.runwayml.com/
+- type: Plans
+  url: plans/runwayml-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/runwayml-rate-limits.yml
+- type: FinOps
+  url: finops/runwayml-finops.yml
+- type: SignUp
+  url: https://dev.runwayml.com/
+- url: https://runwayml.com/research
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

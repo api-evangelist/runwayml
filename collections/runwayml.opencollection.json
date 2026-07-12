@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{apiSecret}}"
+    },
+    "headers": [
+      { "name": "X-Runway-Version", "value": "2024-11-06" },
+      { "name": "Content-Type", "value": "application/json" }
+    ]
+  },
+  "items": [
+    {
+      "info": { "name": "Start Generating", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create an image-to-video task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/image_to_video",
+            "body": { "type": "json", "data": "{\n  \"model\": \"gen4_turbo\",\n  \"promptImage\": \"https://example.com/start.jpg\",\n  \"promptText\": \"slow cinematic push in\",\n  \"ratio\": \"1280:768\",\n  \"duration\": 5\n}" }
+          },
+          "docs": "Generate video from a starting image and text prompt using Gen-4 Turbo or Gen-4.5. Returns a task id to poll."
+        },
+        {
+          "info": { "name": "Create a text-to-image task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/text_to_image",
+            "body": { "type": "json", "data": "{\n  \"model\": \"gen4_image\",\n  \"promptText\": \"a neon-lit street at night\",\n  \"ratio\": \"1920:1080\"\n}" }
+          },
+          "docs": "Generate images from a text prompt using Gen-4 Image or Gen-4 Image Turbo. Returns a task id to poll."
+        },
+        {
+          "info": { "name": "Create a video-to-video task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/video_to_video",
+            "body": { "type": "json", "data": "{\n  \"model\": \"gen4_aleph\",\n  \"videoUri\": \"https://example.com/source.mp4\",\n  \"promptText\": \"restyle as watercolor animation\"\n}" }
+          },
+          "docs": "Transform an existing video with the Aleph model. Returns a task id to poll."
+        },
+        {
+          "info": { "name": "Create a character-performance task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/character_performance",
+            "body": { "type": "json", "data": "{\n  \"model\": \"act_two\",\n  \"character\": { \"type\": \"image\", \"uri\": \"https://example.com/char.png\" },\n  \"reference\": { \"type\": \"video\", \"uri\": \"https://example.com/perf.mp4\" }\n}" }
+          },
+          "docs": "Drive a character with a reference performance video using Act-Two. Returns a task id to poll."
+        },
+        {
+          "info": { "name": "Create a text-to-speech task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/text_to_speech",
+            "body": { "type": "json", "data": "{\n  \"model\": \"eleven_multilingual_v2\",\n  \"text\": \"Welcome to the show.\"\n}" }
+          },
+          "docs": "Synthesize speech audio from text. Returns a task id to poll."
+        },
+        {
+          "info": { "name": "Create a video-upscale task.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/video_upscale",
+            "body": { "type": "json", "data": "{\n  \"model\": \"upscale_v1\",\n  \"videoUri\": \"https://example.com/clip.mp4\"\n}" }
+          },
+          "docs": "Upscale a video to a higher resolution. Returns a task id to poll."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Task Management", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get task detail.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "The task id returned by a generation endpoint." }
+            ]
+          },
+          "docs": "Retrieve status (PENDING, RUNNING, SUCCEEDED, FAILED) and output for a task. Poll no more than once every five seconds."
+        },
+        {
+          "info": { "name": "Cancel or delete a task.", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+            "params": [
+              { "name": "id", "value": "", "type": "path", "description": "The task id." }
+            ]
+          },
+          "docs": "Cancel a running task or delete a completed task record."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Organization", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get organization usage and credits.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dev.runwayml.com/v1/organization"
+          },
+          "docs": "Return the usage tier and remaining credit balance for the organization tied to the API key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

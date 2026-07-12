@@ -1,0 +1,80 @@
+aid: runwayml
+name: Runway
+review:
+  question: Does Runway expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Runway's developer API is entirely
+    request/response REST over HTTPS under https://api.dev.runwayml.com/v1.
+    Generation is asynchronous, but it is delivered through a client-initiated
+    create-task-then-poll pattern (POST a generation endpoint, then GET
+    /v1/tasks/{id} on an interval) - there is no server-push transport
+    (WebSocket or SSE) on Runway's own API to model. The SDKs' waitForTaskOutput
+    helpers are polling loops, not a streaming connection.
+findings:
+  summary: |
+    Runway does not publish a documented public WebSocket API. The Runway
+    developer platform (docs.dev.runwayml.com) exposes only REST (HTTPS)
+    endpoints under https://api.dev.runwayml.com/v1, authenticated with an
+    Authorization: Bearer API secret plus a dated X-Runway-Version header.
+    Video, image, speech, video-to-video, character-performance, and upscale
+    generation are all asynchronous: a POST creates a task and returns a task
+    id, and the client polls GET /v1/tasks/{id} until the task reaches
+    SUCCEEDED or FAILED (no more than once every five seconds per task).
+    No realtime, bidirectional, or streaming WebSocket (ws:// or wss://)
+    endpoint is documented anywhere in Runway's API reference or guides as of
+    the review date. Note: Runway does offer a separate "real-time"
+    interactive characters product, but its integration is documented as an
+    SDK/embed surface, not a public wss:// API endpoint that third parties
+    call directly.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.dev.runwayml.com/v1
+      documented: true
+      note: All generation, task, upload, and organization endpoints are HTTPS REST.
+    - protocol: HTTP Poll
+      scheme: https
+      documented: true
+      note: Asynchronous jobs are consumed by polling GET /v1/tasks/{id}. Client-initiated polling, not server push.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Runway's API reference or guides as of the review date. The async create-task-then-poll pattern replaces any streaming transport.
+  endpointsConfirmedRest:
+    - POST   https://api.dev.runwayml.com/v1/image_to_video
+    - POST   https://api.dev.runwayml.com/v1/text_to_image
+    - POST   https://api.dev.runwayml.com/v1/video_to_video
+    - POST   https://api.dev.runwayml.com/v1/character_performance
+    - POST   https://api.dev.runwayml.com/v1/text_to_speech
+    - POST   https://api.dev.runwayml.com/v1/video_upscale
+    - GET    https://api.dev.runwayml.com/v1/tasks/{id}
+    - DELETE https://api.dev.runwayml.com/v1/tasks/{id}
+    - GET    https://api.dev.runwayml.com/v1/organization
+sources:
+  - url: https://docs.dev.runwayml.com/
+    type: APIReference
+    note: Reference groups endpoints into Start generating, Task management, Uploads, and Organization. All HTTPS REST; no WebSocket mentioned.
+  - url: https://docs.dev.runwayml.com/guides/using-the-api/
+    type: Documentation
+    note: States base URL https://api.dev.runwayml.com/v1 with Authorization Bearer and X-Runway-Version headers; shows the create-task-then-poll pattern.
+  - url: https://docs.dev.runwayml.com/api-details/sdks/
+    type: Documentation
+    note: Node and Python SDK methods (image_to_video, text_to_image, character_performance, tasks) with waitForTaskOutput/wait_for_task_output polling helpers.
+  - url: https://docs.dev.runwayml.com/api-details/versions/2024-11-06/
+    type: Documentation
+    note: Dated API version; documents the X-Runway-Version header and image_to_video parameter changes.
+  - url: https://docs.dev.runwayml.com/guides/pricing/
+    type: Documentation
+    note: Credit-based pricing (~$0.01/credit); per-second and per-image credit costs. No streaming transport referenced.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Runway's own public API is
+    request/response REST plus a client-initiated task-polling loop, so no
+    AsyncAPI document was created - there is no server-push transport on
+    Runway's own API to model.
