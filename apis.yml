@@ -217,6 +217,8 @@ apis:
     organization tied to your API key, so integrations can check credits before
     submitting billable generation tasks.
 common:
+- type: AgenticAccess
+  url: agentic-access/runwayml-agentic-access.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/runwayml
 - type: Website
