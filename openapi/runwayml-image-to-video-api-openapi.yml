@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Runway Character Performance Image-to-Video API
+  description: 'The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway''s public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.'
+  version: '2024-11-06'
+  contact:
+    name: Runway
+    url: https://docs.dev.runwayml.com
+servers:
+- url: https://api.dev.runwayml.com/v1
+  description: Runway developer API
+security:
+- bearerAuth: []
+tags:
+- name: Image-to-Video
+  description: Generate video from an image and prompt (Gen-4 Turbo, Gen-4.5).
+paths:
+  /image_to_video:
+    post:
+      operationId: imageToVideo
+      tags:
+      - Image-to-Video
+      summary: Create an image-to-video task
+      description: Generate video from a starting (and optional ending) image and a text prompt. Returns a task id to poll on GET /tasks/{id}.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageToVideoInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    TaskCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The task id to poll on GET /tasks/{id}.
+    ImageToVideoInput:
+      type: object
+      required:
+      - promptImage
+      - model
+      properties:
+        model:
+          type: string
+          description: Video model id.
+          enum:
+          - gen4_turbo
+          - gen4.5
+          - gen3a_turbo
+          example: gen4_turbo
+        promptImage:
+          description: 'A single image URL / data URI, or an array of positioned images ({ uri, position: first|last }) for start/end frames.'
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: object
+              properties:
+                uri:
+                  type: string
+                position:
+                  type: string
+                  enum:
+                  - first
+                  - last
+        promptText:
+          type: string
+          description: Text prompt guiding the motion / content.
+        ratio:
+          type: string
+          description: Output resolution, for example 1280:768 or 768:1280.
+          example: 1280:768
+        duration:
+          type: integer
+          description: Clip length in seconds.
+          example: 5
+        seed:
+          type: integer
+          description: Deterministic seed (0 to 4294967295).
+  responses:
+    RateLimited:
+      description: Too many requests - the account rate or concurrency limit was exceeded.
+    Unauthorized:
+      description: Missing or invalid API secret.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API secret created in the Runway developer portal (dev.runwayml.com), passed as Authorization Bearer YOUR_API_SECRET. Requests must also send a dated X-Runway-Version header.

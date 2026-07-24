@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Runway Character Performance Text-to-Speech API
+  description: 'The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway''s public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.'
+  version: '2024-11-06'
+  contact:
+    name: Runway
+    url: https://docs.dev.runwayml.com
+servers:
+- url: https://api.dev.runwayml.com/v1
+  description: Runway developer API
+security:
+- bearerAuth: []
+tags:
+- name: Text-to-Speech
+  description: Synthesize speech audio from text.
+paths:
+  /text_to_speech:
+    post:
+      operationId: textToSpeech
+      tags:
+      - Text-to-Speech
+      summary: Create a text-to-speech task
+      description: Synthesize speech audio from text. Billed per character. Returns a task id to poll for the resulting audio URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToSpeechInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    TextToSpeechInput:
+      type: object
+      required:
+      - text
+      - model
+      properties:
+        model:
+          type: string
+          description: Text-to-speech model id.
+          example: eleven_multilingual_v2
+        text:
+          type: string
+        voice:
+          type: string
+          description: Voice id.
+    TaskCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The task id to poll on GET /tasks/{id}.
+  responses:
+    RateLimited:
+      description: Too many requests - the account rate or concurrency limit was exceeded.
+    Unauthorized:
+      description: Missing or invalid API secret.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API secret created in the Runway developer portal (dev.runwayml.com), passed as Authorization Bearer YOUR_API_SECRET. Requests must also send a dated X-Runway-Version header.
