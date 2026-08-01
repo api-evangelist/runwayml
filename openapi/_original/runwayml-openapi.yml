@@ -1,0 +1,481 @@
+openapi: 3.0.3
+info:
+  title: Runway API
+  description: >-
+    The Runway (RunwayML) developer API for generative AI media. All generation
+    is asynchronous: a POST to a generation endpoint creates a task and returns a
+    task id, which the client polls on GET /tasks/{id} until the task reaches
+    SUCCEEDED or FAILED. Every request must include an Authorization Bearer API
+    secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is
+    billed in credits (roughly $0.01 per credit) against a developer organization.
+    This description was authored by API Evangelist from Runway's public
+    documentation and is not an official Runway artifact; verify shapes against
+    docs.dev.runwayml.com.
+  version: '2024-11-06'
+  contact:
+    name: Runway
+    url: https://docs.dev.runwayml.com
+servers:
+  - url: https://api.dev.runwayml.com/v1
+    description: Runway developer API
+security:
+  - bearerAuth: []
+tags:
+  - name: Image-to-Video
+    description: Generate video from an image and prompt (Gen-4 Turbo, Gen-4.5).
+  - name: Text-to-Image
+    description: Generate images from a prompt (Gen-4 Image, Gen-4 Image Turbo).
+  - name: Video-to-Video
+    description: Edit / restyle an existing video (Aleph).
+  - name: Character Performance
+    description: Drive a character with a reference performance (Act-Two).
+  - name: Text-to-Speech
+    description: Synthesize speech audio from text.
+  - name: Upscale
+    description: Upscale a video to higher resolution.
+  - name: Tasks
+    description: Poll and cancel asynchronous generation tasks.
+  - name: Organization
+    description: Usage tier and credit balance for the API organization.
+paths:
+  /image_to_video:
+    post:
+      operationId: imageToVideo
+      tags:
+        - Image-to-Video
+      summary: Create an image-to-video task
+      description: >-
+        Generate video from a starting (and optional ending) image and a text
+        prompt. Returns a task id to poll on GET /tasks/{id}.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageToVideoInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /text_to_image:
+    post:
+      operationId: textToImage
+      tags:
+        - Text-to-Image
+      summary: Create a text-to-image task
+      description: >-
+        Generate images from a text prompt and optional reference images using
+        Gen-4 Image or Gen-4 Image Turbo. Returns a task id to poll.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToImageInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /video_to_video:
+    post:
+      operationId: videoToVideo
+      tags:
+        - Video-to-Video
+      summary: Create a video-to-video task
+      description: >-
+        Transform an existing video with a text prompt and optional reference
+        keyframes using the Aleph model. Returns a task id to poll.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoToVideoInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /character_performance:
+    post:
+      operationId: characterPerformance
+      tags:
+        - Character Performance
+      summary: Create a character-performance task
+      description: >-
+        Drive a target character (image or video) with a reference performance
+        video using the Act-Two model. Returns a task id to poll.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CharacterPerformanceInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /text_to_speech:
+    post:
+      operationId: textToSpeech
+      tags:
+        - Text-to-Speech
+      summary: Create a text-to-speech task
+      description: >-
+        Synthesize speech audio from text. Billed per character. Returns a task
+        id to poll for the resulting audio URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextToSpeechInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /video_upscale:
+    post:
+      operationId: videoUpscale
+      tags:
+        - Upscale
+      summary: Create a video-upscale task
+      description: >-
+        Upscale a generated or uploaded video to a higher resolution. Billed per
+        output frame. Returns a task id to poll.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoUpscaleInput'
+      responses:
+        '200':
+          description: The created task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /tasks/{id}:
+    get:
+      operationId: getTask
+      tags:
+        - Tasks
+      summary: Get task detail
+      description: >-
+        Retrieve the status and output of a generation task. Do not poll more
+        often than once every five seconds per task.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The task id returned by a generation endpoint.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The task detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Task not found.
+    delete:
+      operationId: cancelTask
+      tags:
+        - Tasks
+      summary: Cancel or delete a task
+      description: Cancel a running task or delete a completed task's record.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The task id.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: The task was cancelled / deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Task not found.
+  /organization:
+    get:
+      operationId: getOrganization
+      tags:
+        - Organization
+      summary: Get organization usage and credit balance
+      description: >-
+        Return the usage tier and remaining credit balance for the organization
+        tied to the API key.
+      responses:
+        '200':
+          description: Organization usage and credit information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        API secret created in the Runway developer portal (dev.runwayml.com),
+        passed as Authorization Bearer YOUR_API_SECRET. Requests must also send a
+        dated X-Runway-Version header.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API secret.
+    RateLimited:
+      description: Too many requests - the account rate or concurrency limit was exceeded.
+  schemas:
+    ImageToVideoInput:
+      type: object
+      required:
+        - promptImage
+        - model
+      properties:
+        model:
+          type: string
+          description: Video model id.
+          enum:
+            - gen4_turbo
+            - gen4.5
+            - gen3a_turbo
+          example: gen4_turbo
+        promptImage:
+          description: >-
+            A single image URL / data URI, or an array of positioned images
+            ({ uri, position: first|last }) for start/end frames.
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: object
+                properties:
+                  uri:
+                    type: string
+                  position:
+                    type: string
+                    enum: [first, last]
+        promptText:
+          type: string
+          description: Text prompt guiding the motion / content.
+        ratio:
+          type: string
+          description: Output resolution, for example 1280:768 or 768:1280.
+          example: '1280:768'
+        duration:
+          type: integer
+          description: Clip length in seconds.
+          example: 5
+        seed:
+          type: integer
+          description: Deterministic seed (0 to 4294967295).
+    TextToImageInput:
+      type: object
+      required:
+        - promptText
+        - model
+      properties:
+        model:
+          type: string
+          enum:
+            - gen4_image
+            - gen4_image_turbo
+          example: gen4_image
+        promptText:
+          type: string
+        ratio:
+          type: string
+          example: '1920:1080'
+        referenceImages:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+              tag:
+                type: string
+        seed:
+          type: integer
+    VideoToVideoInput:
+      type: object
+      required:
+        - videoUri
+        - model
+      properties:
+        model:
+          type: string
+          enum:
+            - gen4_aleph
+          example: gen4_aleph
+        videoUri:
+          type: string
+          description: URL or data URI of the source video to transform.
+        promptText:
+          type: string
+        references:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+        ratio:
+          type: string
+        seed:
+          type: integer
+    CharacterPerformanceInput:
+      type: object
+      required:
+        - character
+        - reference
+        - model
+      properties:
+        model:
+          type: string
+          enum:
+            - act_two
+          example: act_two
+        character:
+          type: object
+          description: The target character to animate.
+          properties:
+            type:
+              type: string
+              enum: [image, video]
+            uri:
+              type: string
+        reference:
+          type: object
+          description: The reference performance video to transfer.
+          properties:
+            type:
+              type: string
+              enum: [video]
+            uri:
+              type: string
+        bodyControl:
+          type: boolean
+        seed:
+          type: integer
+    TextToSpeechInput:
+      type: object
+      required:
+        - text
+        - model
+      properties:
+        model:
+          type: string
+          description: Text-to-speech model id.
+          example: eleven_multilingual_v2
+        text:
+          type: string
+        voice:
+          type: string
+          description: Voice id.
+    VideoUpscaleInput:
+      type: object
+      required:
+        - videoUri
+        - model
+      properties:
+        model:
+          type: string
+          enum:
+            - upscale_v1
+          example: upscale_v1
+        videoUri:
+          type: string
+          description: URL or data URI of the source video to upscale.
+    TaskCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The task id to poll on GET /tasks/{id}.
+    Task:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING
+            - RUNNING
+            - SUCCEEDED
+            - FAILED
+            - CANCELLED
+        createdAt:
+          type: string
+          format: date-time
+        progress:
+          type: number
+          description: Completion fraction between 0 and 1 while RUNNING.
+        output:
+          type: array
+          description: Output asset URLs when SUCCEEDED.
+          items:
+            type: string
+        failure:
+          type: string
+          description: Failure reason when FAILED.
+        failureCode:
+          type: string
+    Organization:
+      type: object
+      properties:
+        creditBalance:
+          type: integer
+          description: Remaining credits for the organization.
+        tier:
+          type: object
+          description: Usage tier metadata, including per-model concurrency limits.

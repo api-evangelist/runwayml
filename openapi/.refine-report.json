@@ -1,0 +1,28 @@
+{
+  "provider": "runwayml",
+  "sources": [
+    "runwayml-character-performance-api-openapi.yml",
+    "runwayml-image-to-video-api-openapi.yml",
+    "runwayml-organization-api-openapi.yml",
+    "runwayml-tasks-api-openapi.yml",
+    "runwayml-text-to-image-api-openapi.yml",
+    "runwayml-text-to-speech-api-openapi.yml",
+    "runwayml-upscale-api-openapi.yml",
+    "runwayml-video-to-video-api-openapi.yml"
+  ],
+  "outputs": [
+    "runwayml-character-performance-api-openapi.yml",
+    "runwayml-image-to-video-api-openapi.yml",
+    "runwayml-organization-api-openapi.yml",
+    "runwayml-tasks-api-openapi.yml",
+    "runwayml-text-to-image-api-openapi.yml",
+    "runwayml-text-to-speech-api-openapi.yml",
+    "runwayml-upscale-api-openapi.yml",
+    "runwayml-video-to-video-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
