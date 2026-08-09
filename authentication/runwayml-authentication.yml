@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/runway-ml-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Runway API key issued via the Runway Developer Portal, supplied as a bearer token
+    in the Authorization header.
+  sources:
+  - openapi/runway-ml-openapi.yml

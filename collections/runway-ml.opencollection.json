@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway ML API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Generate a video from an input image",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.dev.runwayml.com/v1/image_to_video",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Creates an asynchronous task that generates a video clip from a source image and optional prompt."
+    },
+    {
+      "info": {
+        "name": "Generate a video from an input video",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.dev.runwayml.com/v1/video_to_video",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Generate a video from an input video"
+    },
+    {
+      "info": {
+        "name": "Generate an image from text",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "https://api.dev.runwayml.com/v1/text_to_image",
+        "body": {
+          "type": "json",
+          "data": "{}"
+        }
+      },
+      "docs": "Generate an image from text"
+    },
+    {
+      "info": {
+        "name": "Retrieve task details",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Task identifier."
+          }
+        ]
+      },
+      "docs": "Retrieve task details"
+    },
+    {
+      "info": {
+        "name": "Cancel or delete a task",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+        "params": [
+          {
+            "name": "id",
+            "value": "",
+            "type": "path",
+            "description": "Task identifier."
+          }
+        ]
+      },
+      "docs": "Cancel or delete a task"
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,592 @@
+{
+  "item": [
+    {
+      "id": "0eb65ce2-0067-4c68-bae8-54913ddd02e0",
+      "name": "Generate a video from an input image",
+      "request": {
+        "name": "Generate a video from an input image",
+        "description": {
+          "content": "Creates an asynchronous task that generates a video clip from a source image and optional prompt.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "image_to_video"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"promptImage\": \"<string>\",\n  \"model\": \"<string>\",\n  \"promptText\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"duration\": \"<integer>\",\n  \"ratio\": \"<string>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "3f24bd25-5b8c-4e25-918b-27f7f7c6e76a",
+          "name": "Task created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "image_to_video"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promptImage\": \"<string>\",\n  \"model\": \"<string>\",\n  \"promptText\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"duration\": \"<integer>\",\n  \"ratio\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"string\",\n  \"status\": \"CANCELLED\",\n  \"createdAt\": \"2005-07-06T01:16:44.760Z\",\n  \"output\": [\n    \"string\",\n    \"string\"\n  ],\n  \"failure\": \"string\",\n  \"failureCode\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "346c03d9-8992-4bb7-ac46-5c6b974906d2",
+          "name": "Missing or invalid API key",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "image_to_video"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promptImage\": \"<string>\",\n  \"model\": \"<string>\",\n  \"promptText\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"duration\": \"<integer>\",\n  \"ratio\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "5c91d4dd-a2ac-4442-95df-4f716547f918",
+      "name": "Generate a video from an input video",
+      "request": {
+        "name": "Generate a video from an input video",
+        "description": {},
+        "url": {
+          "path": [
+            "video_to_video"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"videoUri\": \"<string>\",\n  \"model\": \"<string>\",\n  \"promptText\": \"<string>\",\n  \"seed\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "9816ec3a-b0aa-4136-908f-686d29d7c84d",
+          "name": "Task created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "video_to_video"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"videoUri\": \"<string>\",\n  \"model\": \"<string>\",\n  \"promptText\": \"<string>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"string\",\n  \"status\": \"CANCELLED\",\n  \"createdAt\": \"2005-07-06T01:16:44.760Z\",\n  \"output\": [\n    \"string\",\n    \"string\"\n  ],\n  \"failure\": \"string\",\n  \"failureCode\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ba9d7029-aeb4-455b-b3cc-663ecdff088b",
+      "name": "Generate an image from text",
+      "request": {
+        "name": "Generate an image from text",
+        "description": {},
+        "url": {
+          "path": [
+            "text_to_image"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"<string>\",\n  \"ratio\": \"<string>\",\n  \"seed\": \"<integer>\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "id": "1519f6bc-bc80-4d5e-bee1-71e5ce9c3f2c",
+          "name": "Task created",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "text_to_image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"<string>\",\n  \"ratio\": \"<string>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"string\",\n  \"status\": \"CANCELLED\",\n  \"createdAt\": \"2005-07-06T01:16:44.760Z\",\n  \"output\": [\n    \"string\",\n    \"string\"\n  ],\n  \"failure\": \"string\",\n  \"failureCode\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "9d003b87-dd83-4f43-8c42-ad99bfed706e",
+      "name": "Retrieve task details",
+      "request": {
+        "name": "Retrieve task details",
+        "description": {},
+        "url": {
+          "path": [
+            "tasks",
+            ":id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "id",
+              "description": "(Required) Task identifier."
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "8f6b0383-7cbd-494d-831f-7cd17f582e15",
+          "name": "Task details",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Task identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"string\",\n  \"status\": \"CANCELLED\",\n  \"createdAt\": \"2005-07-06T01:16:44.760Z\",\n  \"output\": [\n    \"string\",\n    \"string\"\n  ],\n  \"failure\": \"string\",\n  \"failureCode\": \"string\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "7055a2ad-1270-4026-8c8e-e414bdb1c380",
+          "name": "Task not found",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Task identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f7a9ccd9-d874-453a-9475-37e2c80e6286",
+      "name": "Cancel or delete a task",
+      "request": {
+        "name": "Cancel or delete a task",
+        "description": {},
+        "url": {
+          "path": [
+            "tasks",
+            ":id"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "disabled": false,
+              "type": "any",
+              "value": "<string>",
+              "key": "id",
+              "description": "(Required) Task identifier."
+            }
+          ]
+        },
+        "method": "DELETE",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "1aa3f509-03c0-47df-a301-3c61909523cf",
+          "name": "Task cancelled or deleted",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "tasks",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Task identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "description": {
+                  "content": "Added as a part of security scheme: bearer",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer <token>"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dev.runwayml.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4d1786e1-1530-4845-894d-3c6773acb6f2",
+    "name": "Runway ML API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Runway API for generative media. Provides endpoints for generating\nvideo from images, video from video, and images from text, plus\ntask management for asynchronous generation jobs.\n\n\nContact Support:\n Name: Runway Developer Portal",
+      "type": "text/plain"
+    }
+  }
+}

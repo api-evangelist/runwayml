@@ -1,0 +1,714 @@
+"""
+Runway ML GraphQL Schema
+Conceptual schema for the Runway generative AI API (Gen-3/Gen-4 family).
+REST API base: https://api.dev.runwayml.com/v1
+Docs: https://docs.dev.runwayml.com/
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar URL
+scalar JSON
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum AssetType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+enum GenerationStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+enum PollingStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum Duration {
+  FIVE_SECONDS
+  TEN_SECONDS
+}
+
+enum Resolution {
+  SD_480P
+  HD_720P
+  FHD_1080P
+}
+
+enum AspectRatio {
+  RATIO_16_9
+  RATIO_9_16
+  RATIO_1_1
+  RATIO_4_3
+  RATIO_3_4
+  RATIO_21_9
+}
+
+enum FrameRate {
+  FPS_24
+  FPS_30
+}
+
+enum VideoStyle {
+  CINEMATIC
+  ANIME
+  THREE_D
+  REALISTIC
+  ABSTRACT
+}
+
+enum RunwayPlan {
+  FREE
+  STANDARD
+  PRO
+  UNLIMITED
+  ENTERPRISE
+}
+
+# ─────────────────────────────────────────────
+# Models
+# ─────────────────────────────────────────────
+
+"""Top-level model descriptor returned by the models list endpoint."""
+type Model {
+  id: ID!
+  name: String!
+  description: String
+  version: String
+  capabilities: ModelCapabilities!
+  details: ModelDetails
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Extended metadata about a specific model version."""
+type ModelDetails {
+  modelId: ID!
+  family: String!
+  version: String!
+  inputTypes: [String!]!
+  outputTypes: [String!]!
+  maxDuration: Duration
+  supportedResolutions: [Resolution!]!
+  supportedAspectRatios: [AspectRatio!]!
+  supportedFrameRates: [FrameRate!]!
+  deprecated: Boolean!
+  deprecationDate: DateTime
+}
+
+"""Capabilities advertised by a model."""
+type ModelCapabilities {
+  textToVideo: Boolean!
+  imageToVideo: Boolean!
+  videoToVideo: Boolean!
+  textToImage: Boolean!
+  textToSpeech: Boolean!
+  inpainting: Boolean!
+  upscaling: Boolean!
+}
+
+# ─────────────────────────────────────────────
+# Gen-3 Alpha (legacy)
+# ─────────────────────────────────────────────
+
+"""Gen-3 Alpha model descriptor."""
+type Gen3Alpha {
+  modelId: ID!
+  name: String!
+  maxFrames: Int!
+  supportedResolutions: [Resolution!]!
+  turboVariant: Gen3AlphaTurbo
+}
+
+"""Faster, lower-cost variant of Gen-3 Alpha."""
+type Gen3AlphaTurbo {
+  modelId: ID!
+  name: String!
+  speedMultiplier: Float!
+  costReduction: Float!
+}
+
+# ─────────────────────────────────────────────
+# Text-to-Video
+# ─────────────────────────────────────────────
+
+"""Input for a text-to-video generation request."""
+input T2VRequest {
+  model: String!
+  promptText: String!
+  seed: VideoSeed
+  duration: Duration
+  resolution: Resolution
+  aspectRatio: AspectRatio
+  frameRate: FrameRate
+  webhookUrl: URL
+}
+
+"""Submitted text-to-video generation job."""
+type TextToVideo {
+  taskId: TaskID!
+  model: String!
+  promptText: String!
+  seed: VideoSeed
+  duration: Duration!
+  resolution: Resolution!
+  aspectRatio: AspectRatio!
+  frameRate: FrameRate!
+  status: GenerationStatus!
+  output: VideoOutput
+  createdAt: DateTime!
+}
+
+"""Prompt container used in text-to-video requests."""
+type VideoPrompt {
+  text: String!
+  negativeText: String
+  weight: Float
+}
+
+"""Optional integer seed for reproducible video generation."""
+type VideoSeed {
+  value: Int!
+}
+
+# ─────────────────────────────────────────────
+# Image-to-Video
+# ─────────────────────────────────────────────
+
+"""Input for an image-to-video generation request."""
+input I2VRequest {
+  model: String!
+  promptImage: String!
+  promptText: String
+  seed: Int
+  duration: Duration
+  ratio: AspectRatio
+  motionScore: Int
+  webhookUrl: URL
+}
+
+"""Submitted image-to-video generation job."""
+type ImageToVideo {
+  taskId: TaskID!
+  model: String!
+  inputImage: InputImage!
+  promptText: String
+  motionScore: MotionScore
+  duration: Duration!
+  ratio: AspectRatio!
+  status: GenerationStatus!
+  output: VideoOutput
+  createdAt: DateTime!
+}
+
+"""Reference to the source image used in image-to-video."""
+type InputImage {
+  url: URL
+  base64: String
+  assetId: ID
+  width: Int
+  height: Int
+  mimeType: String
+}
+
+"""Motion intensity score applied to image-to-video."""
+type MotionScore {
+  value: Int!
+  min: Int!
+  max: Int!
+}
+
+"""Strength of the video conditioning in video-to-video."""
+type VideoStrength {
+  value: Float!
+  min: Float!
+  max: Float!
+}
+
+# ─────────────────────────────────────────────
+# Video-to-Video
+# ─────────────────────────────────────────────
+
+"""Input for a video-to-video transformation request."""
+input V2VRequest {
+  model: String!
+  videoInput: String!
+  promptText: String!
+  videoStrength: Float
+  style: VideoStyle
+  seed: Int
+  webhookUrl: URL
+}
+
+"""Submitted video-to-video transformation job."""
+type VideoToVideo {
+  taskId: TaskID!
+  model: String!
+  videoInput: VideoInput!
+  promptText: String!
+  videoStrength: VideoStrength
+  style: VideoStyle
+  status: GenerationStatus!
+  output: VideoOutput
+  createdAt: DateTime!
+}
+
+"""Source video reference used in video-to-video jobs."""
+type VideoInput {
+  url: URL
+  assetId: ID
+  durationSeconds: Float
+  width: Int
+  height: Int
+}
+
+# ─────────────────────────────────────────────
+# Upscale & Inpaint
+# ─────────────────────────────────────────────
+
+"""Input for upscaling a generated or uploaded video."""
+input UpscaleRequest {
+  model: String!
+  videoInput: String!
+  targetResolution: Resolution!
+  webhookUrl: URL
+}
+
+"""Input for inpainting a region of an image or video frame."""
+input InpaintRequest {
+  model: String!
+  sourceAsset: String!
+  mask: MaskInput!
+  promptText: String!
+  seed: Int
+  webhookUrl: URL
+}
+
+"""Mask definition for inpainting."""
+type MaskInput {
+  maskUrl: URL
+  brushTool: BrushTool
+}
+
+"""Brush parameters used to generate an inpainting mask."""
+type BrushTool {
+  x: Float!
+  y: Float!
+  radius: Float!
+  strokes: [BrushStroke!]
+}
+
+"""A single brush stroke in a mask."""
+type BrushStroke {
+  x: Float!
+  y: Float!
+  pressure: Float
+}
+
+# ─────────────────────────────────────────────
+# Video Output
+# ─────────────────────────────────────────────
+
+"""Output produced by any video generation task."""
+type VideoOutput {
+  url: VideoURL!
+  preview: VideoPreview
+  durationSeconds: Float
+  width: Int
+  height: Int
+  frameRate: Float
+  mimeType: String!
+  sizeBytes: Int
+}
+
+"""Signed URL pointing to the generated video file."""
+type VideoURL {
+  href: URL!
+  expiresAt: DateTime!
+}
+
+"""Low-resolution preview / thumbnail for a generated video."""
+type VideoPreview {
+  url: URL!
+  width: Int!
+  height: Int!
+  format: String!
+}
+
+# ─────────────────────────────────────────────
+# Assets
+# ─────────────────────────────────────────────
+
+"""User-uploaded or generated asset stored in Runway."""
+type RunwayAsset {
+  id: ID!
+  name: String!
+  type: AssetType!
+  url: URL!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  projectId: ID
+  tags: [String!]
+  metadata: JSON
+}
+
+"""Generic asset wrapper."""
+type Asset {
+  id: ID!
+  type: AssetType!
+  details: AssetDetails
+}
+
+"""Union of concrete asset detail types."""
+union AssetDetails = ImageAsset | VideoAsset | AudioAsset
+
+"""Details for an image asset."""
+type ImageAsset {
+  assetId: ID!
+  url: URL!
+  width: Int!
+  height: Int!
+  format: String!
+  sizeBytes: Int
+}
+
+"""Details for a video asset."""
+type VideoAsset {
+  assetId: ID!
+  url: URL!
+  width: Int!
+  height: Int!
+  durationSeconds: Float!
+  frameRate: Float!
+  format: String!
+  sizeBytes: Int
+}
+
+"""Details for an audio asset."""
+type AudioAsset {
+  assetId: ID!
+  url: URL!
+  durationSeconds: Float!
+  sampleRate: Int!
+  channels: Int!
+  format: String!
+  sizeBytes: Int
+}
+
+# ─────────────────────────────────────────────
+# Projects & Teams
+# ─────────────────────────────────────────────
+
+"""A Runway project grouping assets and generations."""
+type Project {
+  id: ID!
+  name: String!
+  description: String
+  details: ProjectDetails!
+  team: Team
+  assets(first: Int, after: String): AssetConnection!
+  generations(first: Int, after: String): GenerationConnection!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Detailed metadata for a project."""
+type ProjectDetails {
+  projectId: ID!
+  visibility: String!
+  defaultModel: String
+  creditBudget: Float
+  creditUsed: Float
+}
+
+"""A team workspace in Runway."""
+type Team {
+  id: ID!
+  name: String!
+  members: [TeamMember!]!
+  creditBalance: CreditBalance!
+  subscription: Subscription!
+  createdAt: DateTime!
+}
+
+"""A member of a Runway team."""
+type TeamMember {
+  userId: ID!
+  email: String!
+  role: String!
+  joinedAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Credits & Billing
+# ─────────────────────────────────────────────
+
+"""Current credit balance for a team or user."""
+type CreditBalance {
+  available: Float!
+  used: Float!
+  total: Float!
+  resetAt: DateTime
+}
+
+"""A single generation credit-usage record."""
+type UsageRecord {
+  id: ID!
+  taskId: ID!
+  model: String!
+  creditsConsumed: Float!
+  createdAt: DateTime!
+  description: String
+}
+
+"""A Runway subscription plan attached to a team."""
+type Subscription {
+  id: ID!
+  plan: RunwayPlan!
+  status: String!
+  currentPeriodStart: DateTime!
+  currentPeriodEnd: DateTime!
+  cancelAtPeriodEnd: Boolean!
+  features: [String!]!
+}
+
+# ─────────────────────────────────────────────
+# Generations (task tracker)
+# ─────────────────────────────────────────────
+
+"""A tracked generation job (text-to-video, image-to-video, etc.)."""
+type Generation {
+  id: ID!
+  taskId: TaskID!
+  model: String!
+  type: String!
+  status: GenerationStatus!
+  result: GenerationResult
+  pollingStatus: PollingStatus!
+  creditsUsed: Float
+  createdAt: DateTime!
+  completedAt: DateTime
+  failureReason: String
+}
+
+"""Result payload returned once a generation completes."""
+type GenerationResult {
+  outputs: [VideoOutput!]
+  assetIds: [ID!]
+  metadata: JSON
+}
+
+"""Opaque task identifier returned by async generation endpoints."""
+type TaskID {
+  value: ID!
+}
+
+# ─────────────────────────────────────────────
+# Auth & API Keys
+# ─────────────────────────────────────────────
+
+"""An API key used to authenticate requests."""
+type APIKey {
+  id: ID!
+  name: String!
+  prefix: String!
+  createdAt: DateTime!
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  scopes: [String!]!
+  active: Boolean!
+}
+
+"""A short-lived bearer token derived from an API key."""
+type Token {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  scope: String
+}
+
+# ─────────────────────────────────────────────
+# Webhooks & Rate Limits
+# ─────────────────────────────────────────────
+
+"""A webhook endpoint registered to receive task completion events."""
+type Webhook {
+  id: ID!
+  url: URL!
+  events: [String!]!
+  active: Boolean!
+  secret: String
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Rate-limit state for an API key or team."""
+type RateLimit {
+  limit: Int!
+  remaining: Int!
+  resetAt: DateTime!
+  windowSeconds: Int!
+  scope: String!
+}
+
+# ─────────────────────────────────────────────
+# Connections (pagination)
+# ─────────────────────────────────────────────
+
+type AssetConnection {
+  edges: [AssetEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AssetEdge {
+  cursor: String!
+  node: RunwayAsset!
+}
+
+type GenerationConnection {
+  edges: [GenerationEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type GenerationEdge {
+  cursor: String!
+  node: Generation!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+# ─────────────────────────────────────────────
+# Root Operations
+# ─────────────────────────────────────────────
+
+type Query {
+  """List available generative models."""
+  models: [Model!]!
+
+  """Fetch a single model by ID."""
+  model(id: ID!): Model
+
+  """Get the status of a generation task."""
+  generation(taskId: ID!): Generation
+
+  """List all generations for the authenticated user."""
+  generations(
+    status: GenerationStatus
+    first: Int
+    after: String
+  ): GenerationConnection!
+
+  """Fetch a single asset by ID."""
+  asset(id: ID!): RunwayAsset
+
+  """List assets for the authenticated user."""
+  assets(
+    type: AssetType
+    projectId: ID
+    first: Int
+    after: String
+  ): AssetConnection!
+
+  """Fetch the authenticated user's credit balance."""
+  creditBalance: CreditBalance!
+
+  """List usage records for the current billing period."""
+  usageRecords(first: Int, after: String): [UsageRecord!]!
+
+  """Get the current subscription plan."""
+  subscription: Subscription!
+
+  """List API keys for the authenticated team."""
+  apiKeys: [APIKey!]!
+
+  """List webhooks for the authenticated team."""
+  webhooks: [Webhook!]!
+
+  """Get current rate-limit state."""
+  rateLimit: RateLimit!
+
+  """Fetch a project by ID."""
+  project(id: ID!): Project
+
+  """List all projects for the authenticated team."""
+  projects(first: Int, after: String): [Project!]!
+
+  """Fetch the authenticated team."""
+  team: Team!
+
+  """List Gen-3 Alpha model variants."""
+  gen3AlphaModels: [Gen3Alpha!]!
+}
+
+type Mutation {
+  """Submit a text-to-video generation job."""
+  createTextToVideo(input: T2VRequest!): TextToVideo!
+
+  """Submit an image-to-video generation job."""
+  createImageToVideo(input: I2VRequest!): ImageToVideo!
+
+  """Submit a video-to-video transformation job."""
+  createVideoToVideo(input: V2VRequest!): VideoToVideo!
+
+  """Submit a video upscaling job."""
+  upscaleVideo(input: UpscaleRequest!): Generation!
+
+  """Submit an inpainting job."""
+  inpaintAsset(input: InpaintRequest!): Generation!
+
+  """Cancel a running generation task."""
+  cancelGeneration(taskId: ID!): Generation!
+
+  """Delete an asset."""
+  deleteAsset(id: ID!): Boolean!
+
+  """Create a new project."""
+  createProject(name: String!, description: String): Project!
+
+  """Update a project."""
+  updateProject(id: ID!, name: String, description: String): Project!
+
+  """Delete a project."""
+  deleteProject(id: ID!): Boolean!
+
+  """Register a webhook endpoint."""
+  createWebhook(url: URL!, events: [String!]!, secret: String): Webhook!
+
+  """Update a webhook endpoint."""
+  updateWebhook(id: ID!, url: URL, events: [String!], active: Boolean): Webhook!
+
+  """Delete a webhook."""
+  deleteWebhook(id: ID!): Boolean!
+
+  """Create a new API key."""
+  createAPIKey(name: String!, scopes: [String!]): APIKey!
+
+  """Revoke an API key."""
+  revokeAPIKey(id: ID!): Boolean!
+}
+
+type Subscription {
+  """Stream status updates for a running generation task."""
+  generationStatusUpdated(taskId: ID!): Generation!
+}
