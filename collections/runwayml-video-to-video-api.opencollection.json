@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway Character Performance Video-to-Video API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Video-to-Video",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a video-to-video task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/video_to_video",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transform an existing video with a text prompt and optional reference keyframes using the Aleph model. Returns a task id to poll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

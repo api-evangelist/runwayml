@@ -1,0 +1,234 @@
+{
+  "item": [
+    {
+      "id": "bf44a432-d3fb-4adb-b66d-89f8b83f0122",
+      "name": "Text-to-Speech",
+      "description": {
+        "content": "Synthesize speech audio from text.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ca418c52-bccd-4b11-b640-b1b699d03f37",
+          "name": "Create a text-to-speech task",
+          "request": {
+            "name": "Create a text-to-speech task",
+            "description": {
+              "content": "Synthesize speech audio from text. Billed per character. Returns a task id to poll for the resulting audio URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "text_to_speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"<string>\",\n  \"model\": \"<string>\",\n  \"voice\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "267b3cde-4c0c-48fe-9735-65b44d34bd63",
+              "name": "The created task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"model\": \"eleven_multilingual_v2\",\n  \"voice\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd2fb9f6-7d31-46a5-9e40-849fa06dafc5",
+              "name": "Missing or invalid API secret.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"model\": \"eleven_multilingual_v2\",\n  \"voice\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c01191d-12a3-47a2-8941-3b128d9960dd",
+              "name": "Too many requests - the account rate or concurrency limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text\": \"<string>\",\n  \"model\": \"eleven_multilingual_v2\",\n  \"voice\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dev.runwayml.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ef03b9b0-0780-4f30-937c-60aadb259652",
+    "name": "Runway Character Performance Text-to-Speech API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway's public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.\n\nContact Support:\n Name: Runway",
+      "type": "text/plain"
+    }
+  }
+}

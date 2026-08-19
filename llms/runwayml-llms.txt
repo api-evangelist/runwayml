@@ -1,0 +1,31 @@
+# Runway Dev
+
+> Runway Dev exposes generative video, image, and audio models over HTTP, plus real-time conversational Characters and saved model routing configurations. Most generation endpoints are asynchronous: send a request to receive a task id, then poll `GET /v1/tasks/{id}` until the task reaches `SUCCEEDED` or `FAILED`. Every request must include an `X-Runway-Version` header. Request bodies on generation endpoints are discriminated unions keyed on `model`, so the valid `ratio`, `duration`, and optional fields depend on which model is selected.
+
+Every documentation page is also available as raw Markdown by appending `.md` to its path, for example `https://docs.dev.runwayml.com/guides/using-the-api.md`.
+
+- Start with [/ai-context.md](https://docs.dev.runwayml.com/ai-context.md) if you only read one file. It covers authentication, the task lifecycle, and the complete capability surface in a few thousand tokens.
+- [/api.md](https://docs.dev.runwayml.com/api.md) is a generated reference for every endpoint, including per-model request fields and their allowed values. Read it before constructing a request body.
+- [/openapi.json](https://docs.dev.runwayml.com/openapi.json) is the machine-readable OpenAPI 3.1 specification.
+- Credit costs are documented only in [/guides/pricing.md](https://docs.dev.runwayml.com/guides/pricing.md). Do not infer pricing from anywhere else.
+- Model identifiers change over time. Only use identifiers listed in [/guides/models.md](https://docs.dev.runwayml.com/guides/models.md) or `/api.md`.
+
+## Documentation Sets
+
+- [Abridged documentation](https://docs.dev.runwayml.com/llms-small.txt): a compact version of the documentation for Runway Dev, with non-essential content removed
+- [Complete documentation](https://docs.dev.runwayml.com/llms-full.txt): the full documentation for Runway Dev
+- [Core API](https://docs.dev.runwayml.com/_llms-txt/core-api.txt): generation endpoints, task polling, inputs and outputs, errors, versioning, and billing
+- [Characters](https://docs.dev.runwayml.com/_llms-txt/characters.txt): Avatars, Sessions, knowledge bases, custom voices, tool calling, and the embedded widget
+- [Recipes](https://docs.dev.runwayml.com/_llms-txt/recipes.txt): prebuilt multi-step video and image workflows such as product ads and ad localization
+- [Model Routers](https://docs.dev.runwayml.com/_llms-txt/model-routers.txt): saved routing configurations that pick a model by cost, latency, or quality
+
+## Notes
+
+- The complete documentation includes all content from the official documentation
+- The content is automatically generated from the same source as the official documentation
+
+## Optional
+
+- [Agent context primer](https://docs.dev.runwayml.com/ai-context.md): condensed primer covering authentication, the task lifecycle, and every endpoint group
+- [Generated API reference](https://docs.dev.runwayml.com/api.md): every endpoint with per-model request fields and allowed values, as Markdown
+- [OpenAPI specification](https://docs.dev.runwayml.com/openapi.json): the machine-readable OpenAPI 3.1 document

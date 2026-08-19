@@ -1,0 +1,234 @@
+{
+  "item": [
+    {
+      "id": "d85c42a7-f0bb-4ef9-93a6-f084a464f515",
+      "name": "Character Performance",
+      "description": {
+        "content": "Drive a character with a reference performance (Act-Two).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b383669f-adf4-4e83-96e2-c3dc10593f72",
+          "name": "Create a character-performance task",
+          "request": {
+            "name": "Create a character-performance task",
+            "description": {
+              "content": "Drive a target character (image or video) with a reference performance video using the Act-Two model. Returns a task id to poll.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "character_performance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"character\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"reference\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"model\": \"<string>\",\n  \"bodyControl\": \"<boolean>\",\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5fccaffb-6d3c-4e5d-a49b-1bcc6a78f561",
+              "name": "The created task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "character_performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"character\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"reference\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"model\": \"act_two\",\n  \"bodyControl\": \"<boolean>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f18612f-8ef3-43d8-b18a-8890d526256e",
+              "name": "Missing or invalid API secret.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "character_performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"character\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"reference\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"model\": \"act_two\",\n  \"bodyControl\": \"<boolean>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff051aa1-7ce3-4021-a9a8-5ab8a9459bda",
+              "name": "Too many requests - the account rate or concurrency limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "character_performance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"character\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"reference\": {\n    \"type\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"model\": \"act_two\",\n  \"bodyControl\": \"<boolean>\",\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dev.runwayml.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ac05f20a-03d7-4a54-b413-b3569849a8e2",
+    "name": "Runway Character Performance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway's public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.\n\nContact Support:\n Name: Runway",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "item": [
+    {
+      "id": "03a55430-4f3f-47f6-a302-550989ddc634",
+      "name": "Organization",
+      "description": {
+        "content": "Usage tier and credit balance for the API organization.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6852af52-a306-4b89-832d-c1483f5c7335",
+          "name": "Get organization usage and credit balance",
+          "request": {
+            "name": "Get organization usage and credit balance",
+            "description": {
+              "content": "Return the usage tier and remaining credit balance for the organization tied to the API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a0d29ef-928c-4164-96a1-d8b1e2af0c99",
+              "name": "Organization usage and credit information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"creditBalance\": 8272,\n  \"tier\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c8d7139-5238-4d79-911d-0d842f7941c6",
+              "name": "Missing or invalid API secret.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dev.runwayml.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d99f4cf1-dd96-44d9-b799-f1d2737b2f96",
+    "name": "Runway Character Performance Organization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway's public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.\n\nContact Support:\n Name: Runway",
+      "type": "text/plain"
+    }
+  }
+}

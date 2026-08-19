@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway Character Performance Upscale API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Upscale",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a video-upscale task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/video_upscale",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upscale a generated or uploaded video to a higher resolution. Billed per output frame. Returns a task id to poll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

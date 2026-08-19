@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway Character Performance Tasks API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get task detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The task id returned by a generation endpoint."
+              }
+            ]
+          },
+          "docs": "Retrieve the status and output of a generation task. Do not poll more often than once every five seconds per task."
+        },
+        {
+          "info": {
+            "name": "Cancel or delete a task",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.dev.runwayml.com/v1/tasks/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The task id."
+              }
+            ]
+          },
+          "docs": "Cancel a running task or delete a completed task's record."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

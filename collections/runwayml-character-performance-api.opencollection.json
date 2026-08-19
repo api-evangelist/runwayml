@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway Character Performance API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Character Performance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a character-performance task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/character_performance",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Drive a target character (image or video) with a reference performance video using the Act-Two model. Returns a task id to poll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

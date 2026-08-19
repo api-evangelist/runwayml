@@ -1,0 +1,234 @@
+{
+  "item": [
+    {
+      "id": "23e12be7-552c-4b69-9ec9-bc08e0c29519",
+      "name": "Text-to-Image",
+      "description": {
+        "content": "Generate images from a prompt (Gen-4 Image, Gen-4 Image Turbo).",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "915d6f77-255c-45fe-9b70-5bf367bf1a50",
+          "name": "Create a text-to-image task",
+          "request": {
+            "name": "Create a text-to-image task",
+            "description": {
+              "content": "Generate images from a text prompt and optional reference images using Gen-4 Image or Gen-4 Image Turbo. Returns a task id to poll.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "text_to_image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"<string>\",\n  \"ratio\": \"<string>\",\n  \"referenceImages\": [\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"seed\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d9f065d9-7c97-44f9-85c7-8bc7de272a73",
+              "name": "The created task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"gen4_image\",\n  \"ratio\": \"1920:1080\",\n  \"referenceImages\": [\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81c012af-fed9-4e0c-8bc4-35d038fc9004",
+              "name": "Missing or invalid API secret.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"gen4_image\",\n  \"ratio\": \"1920:1080\",\n  \"referenceImages\": [\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e62d327-268b-4a65-8ba0-9a67ae8c77e8",
+              "name": "Too many requests - the account rate or concurrency limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "text_to_image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"promptText\": \"<string>\",\n  \"model\": \"gen4_image\",\n  \"ratio\": \"1920:1080\",\n  \"referenceImages\": [\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    },\n    {\n      \"uri\": \"<string>\",\n      \"tag\": \"<string>\"\n    }\n  ],\n  \"seed\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.dev.runwayml.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c86a67ac-e1fd-4638-a182-9a07201fc3d1",
+    "name": "Runway Character Performance Text-to-Image API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Runway (RunwayML) developer API for generative AI media. All generation is asynchronous: a POST to a generation endpoint creates a task and returns a task id, which the client polls on GET /tasks/{id} until the task reaches SUCCEEDED or FAILED. Every request must include an Authorization Bearer API secret and a dated X-Runway-Version header (for example 2024-11-06). Usage is billed in credits (roughly $0.01 per credit) against a developer organization. This description was authored by API Evangelist from Runway's public documentation and is not an official Runway artifact; verify shapes against docs.dev.runwayml.com.\n\nContact Support:\n Name: Runway",
+      "type": "text/plain"
+    }
+  }
+}

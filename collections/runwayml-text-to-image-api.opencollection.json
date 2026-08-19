@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Runway Character Performance Text-to-Image API",
+    "version": "2024-11-06"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Text-to-Image",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a text-to-image task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.dev.runwayml.com/v1/text_to_image",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate images from a text prompt and optional reference images using Gen-4 Image or Gen-4 Image Turbo. Returns a task id to poll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
