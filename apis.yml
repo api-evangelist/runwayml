@@ -31,7 +31,7 @@ tags:
 - Video-to-Video
 created: '2026-07-11'
 modified: '2026-08-08'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: runwayml:runwayml-character-performance-api
   name: Runway Character Performance API
