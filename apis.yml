@@ -8,6 +8,18 @@ description: Runway (RunwayML) is a generative AI media platform whose developer
   editing model, and Act character performance, all through an asynchronous create-task-then-poll pattern
   authenticated with a Bearer API secret and a dated X-Runway-Version header. Access is API-key based
   via a developer organization; usage is billed in credits at roughly $0.01 per credit.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
