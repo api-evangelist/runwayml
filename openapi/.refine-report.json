@@ -23,6 +23,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "runwayml-character-performance-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-image-to-video-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-organization-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-tasks-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-text-to-image-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-text-to-speech-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-upscale-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "runwayml-video-to-video-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
